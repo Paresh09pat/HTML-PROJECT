@@ -37,7 +37,7 @@
     <h2>The backtracking algorithm.</h2>
     <p>Here is the algorithm (in pseudocode) for doing backtracking from a given node n:</p>
     <pre>
-        <code style="font-size:18 ; color:brown">
+        <code style="color:brown; font-size: 18;">
         boolean solve(Node n) {
         if n is a leaf node {
             if the leaf is a goal node, return true
@@ -134,25 +134,26 @@
     </p>
     <p>Here is the recursive backtracking algorithm, modified slightly to print (in reverse order) the nodes along the successful path:
     </p>
-    <pre style="font-size:18px; color: brown;">
-        boolean solve(Node n) {
-            if n is a leaf node {
-                if the leaf is a goal node {
-                   print n
-                   return true
-                }
-                else return false
-            } else {
-                for each child c of n {
-                    if solve(c) succeeds {
-                        print n
-                        return true
+    <pre>
+        <code style="font-size:18px; color: brown;">
+            boolean solve(Node n) {
+                if n is a leaf node {
+                    if the leaf is a goal node {
+                       print n
+                       return true
                     }
+                    else return false
+                } else {
+                    for each child c of n {
+                        if solve(c) succeeds {
+                            print n
+                            return true
+                        }
+                    }
+                    return false
                 }
-                return false
             }
-        }
-        
+        </code>   
     </pre>
     <h2>Keeping backtracking simple</h2>
     <p>
@@ -202,58 +203,66 @@
         <p>
             Here's a definition of the BinaryTree class:
         </p>
-        <pre style="font-size:18px;color: brown; ">
-            public class BinaryTree {
-                BinaryTree leftChild = null;
-                BinaryTree rightChild = null;
-                boolean isGoalNode = false;
-                String name;
-                
-                BinaryTree(String name, BinaryTree left, BinaryTree right, boolean isGoalNode) {
-                    this.name = name;
-                    leftChild = left;
-                    rightChild = right;
-                    this.isGoalNode = isGoalNode;
+        <pre>
+            <code style="font-size:18px;color: brown; ">
+                public class BinaryTree {
+                    BinaryTree leftChild = null;
+                    BinaryTree rightChild = null;
+                    boolean isGoalNode = false;
+                    String name;
+                    
+                    BinaryTree(String name, BinaryTree left, BinaryTree right, boolean isGoalNode) {
+                        this.name = name;
+                        leftChild = left;
+                        rightChild = right;
+                        this.isGoalNode = isGoalNode;
+                    }
                 }
-            }
+            </code>
         </pre>
         <p>
             Next we will create a <big style="color:brown ;">TreeSearch</big> class, and in it we will define a method 
             <big style="color:brown ;">makeTree()</big> which constructs the above binary tree.
         </p>
-        <pre style="font-size:18px; color: brown;">
-            static BinaryTree makeTree() {
-                BinaryTree root, a, b, c, d, e, f;
-                c = new BinaryTree("C", null, null, false);
-                d = new BinaryTree("D", null, null, false);
-                e = new BinaryTree("E", null, null, true);
-                f = new BinaryTree("F", null, null, false);
-                a = new BinaryTree("A", c, d, false);
-                b = new BinaryTree("B", e, f, false);
-                root = new BinaryTree("Root", a, b, false);
-                return root;
-            }
+        <pre>
+            <code style="font-size:18px; color: brown;">
+                static BinaryTree makeTree() {
+                    BinaryTree root, a, b, c, d, e, f;
+                    c = new BinaryTree("C", null, null, false);
+                    d = new BinaryTree("D", null, null, false);
+                    e = new BinaryTree("E", null, null, true);
+                    f = new BinaryTree("F", null, null, false);
+                    a = new BinaryTree("A", c, d, false);
+                    b = new BinaryTree("B", e, f, false);
+                    root = new BinaryTree("Root", a, b, false);
+                    return root;
+                }
+            </code>
         </pre>
         <p>
             Here's a main program to create a binary tree and try to solve it:
         </p>
-        <pre style="font-size: 18; color:brown">
-            public static void main(String args[]) {
-                BinaryTree tree = makeTree();
-                System.out.println(solvable(tree));
-            }
-        </pre>
+        <pre>
+            <code style="font-size: 18; color:brown" >
+                public static void main(String args[]) {
+                    BinaryTree tree = makeTree();
+                    System.out.println(solvable(tree));
+                }
+            </code>
+        </pre>>
         <p>
             And finally, here's the recursive backtracking routine to "solve" the binary tree by finding a goal node.
         </p>
-        <pre style="font-size:18px; color: brown; ">
-            static boolean solvable(BinaryTree node) {
-               <font style="color:blue ;">/* 1 */</font> if (node == null) return false;
-               <font style="color:blue ;">/* 2 */</font> if (node.isGoalNode) return true;
-               <font style="color:blue ;">/* 3 */</font> if (solvable(node.leftChild)) return true;
-               <font style="color:blue ;">/* 4 */</font> if (solvable(node.rightChild)) return true;
-               <font style="color:blue ;">/* 5 */</font> return false;
-                }
+        <pre>
+            <code style="font-size:18px; color: brown; ">
+                static boolean solvable(BinaryTree node) {
+                    <font style="color:blue ;">/* 1 */</font> if (node == null) return false;
+                    <font style="color:blue ;">/* 2 */</font> if (node.isGoalNode) return true;
+                    <font style="color:blue ;">/* 3 */</font> if (solvable(node.leftChild)) return true;
+                    <font style="color:blue ;">/* 4 */</font> if (solvable(node.rightChild)) return true;
+                    <font style="color:blue ;">/* 5 */</font> return false;
+                     }
+            </code>
         </pre>
         <p>Here's what the numbered lines are doing:</p>
         <ol>
@@ -280,13 +289,15 @@
      <p>Each time we ask for another node, we have to check if it is <big style="color: brown;">null</big>. In the above we put that check as the first thing in <big style="color: brown;">solvable</big> . An alternative 
           would be to check first whether each child exists, and recur only if they do. Here's that alternative version:
         </p>
-        <pre style="font-size:18px; color: brown;">
-            static boolean solvable(BinaryTree node) {
-                if (node.isGoalNode) return true;
-                if (node.leftChild != null && solvable(node.leftChild)) return true;
-                if (node.rightChild != null && solvable(node.rightChild)) return true;
-                return false;
-            }
+        <pre>
+            <code style="font-size:18px; color: brown;">
+                static boolean solvable(BinaryTree node) {
+                    if (node.isGoalNode) return true;
+                    if (node.leftChild != null && solvable(node.leftChild)) return true;
+                    if (node.rightChild != null && solvable(node.rightChild)) return true;
+                    return false;
+                }
+            </code>
         </pre>
         <p>
             I think the first version is simpler, but the second version is slightly
@@ -314,44 +325,47 @@
             In both methods, the colors are represented by integers, from <big style="color: brown;">RED=1</big> to <big style="color:brown ;">BLUE=4</big>. We define the following helper methods. The helper method code isn't displayed here because it's not important for understanding the method that does the backtracking.
         </p>
 
-    <pre>
+    
 <big style="font-size:18px; color: brown;">boolean mapIsOK()</big>
-     <font style="font-size:15; ">Used by method 1 to check (at a leaf node) whether the entire map is colored correctly.</font>
+    <p style="margin-left:30px ;"> Used by method 1 to check (at a leaf node) whether the entire map is colored correctly.</p>
 <big style="font-size:18px; color: brown;">boolean okToColor(int row, int column, int color)</big>
-     <font style="font-size:15;"> Used by method 2 to check, at every node, whether there is an adjacent node already colored with the given color.</font>
+     <p style="margin-left:30px ;"> Used by method 2 to check, at every node, whether there is an adjacent node already colored with the given color.</p>
 
 <big style="font-size:18px; color: brown;">int[] nextRowAndColumn(int row, int column)</big>
-     <font style="font-size: 15;"> Used by both methods to find the next "country" (actually, the row and column of the next square on the checkerboard).</font>
-    </pre>
+     <p style="margin-left:30px ;"> Used by both methods to find the next "country" (actually, the row and column of the next square on the checkerboard).</p>
 
     <p> Here's the code for method 1:</p>
 
-    <pre style="font-size:18; color:brown;">
-    boolean explore1(int row, int column, int color) {
-        if (row >= NUM_ROWS) return mapIsOK();
-        map[row][column] = color;
-        for (int nextColor = RED; nextColor <= BLUE; nextColor++) {
-            int[] next = nextRowAndColumn(row, column);
-            if (explore1(next[0], next[1], nextColor)) return true;
+    <pre>
+    <code style="font-size:18; color:brown;">
+        boolean explore1(int row, int column, int color) {
+            if (row >= NUM_ROWS) return mapIsOK();
+            map[row][column] = color;
+            for (int nextColor = RED; nextColor <= BLUE; nextColor++) {
+                int[] next = nextRowAndColumn(row, column);
+                if (explore1(next[0], next[1], nextColor)) return true;
+            }
+            return false;
         }
-        return false;
-    }
+    </code>
     </pre>
     <p>
         And here's the code for method 2:
     </p>
-    <pre style="font-size:18 ; color:brown;">
-        boolean explore2(int row, int column, int color) {
-            if (row >= NUM_ROWS) return true;
-            if (okToColor(row, column, color)) {
-                map[row][column] = color;
-                for (int nextColor = RED; nextColor <= BLUE; nextColor++) {
-                    int[] next = nextRowAndColumn(row, column);
-                    if (explore2(next[0], next[1], nextColor)) return true;
+    <pre>
+        <code style="font-size:18 ; color:brown;">
+            boolean explore2(int row, int column, int color) {
+                if (row >= NUM_ROWS) return true;
+                if (okToColor(row, column, color)) {
+                    map[row][column] = color;
+                    for (int nextColor = RED; nextColor <= BLUE; nextColor++) {
+                        int[] next = nextRowAndColumn(row, column);
+                        if (explore2(next[0], next[1], nextColor)) return true;
+                    }
                 }
+                return false;
             }
-            return false;
-        }
+        </code>
     </pre>
     <p>
         Those appear pretty similar, and you might think they are equally good. However, the timing information suggests otherwise:
@@ -395,8 +409,9 @@
     <p>
         Here's our debugging code. For this trivial program, there's almost more debugging code than actual code, but in larger programs the proportions will be better.
     </p>
-    <pre style="font-size:18; color: brown; ">
-        static String indent = "";
+    <pre>
+        <code style="font-size:18; color: brown;">
+            static String indent = "";
 
 static String name(BinaryTree node) {
     if (node == null) return null;
@@ -419,19 +434,22 @@ static boolean no(BinaryTree node) {
     System.out.println(indent + "solvable(" + name(node) + ") returns false");
     return false;
 }
+        </code>
     </pre>
     <p>
         To use this code, we modify solvable as follows:
     </p>
-<pre style="font-size:18; color: brown;">
-    static boolean solvable(BinaryTree node) {
-        <b>enter(node);</b>
-        if (node == null) return <b>no(node)</b>;
-        if (node.isGoalNode) return <b>yes(node)</b>;
-        if (solvable(node.leftChild)) return <b>yes(node)</b>;
-        if (solvable(node.rightChild)) return <b>yes(node)</b>;
-        return <b>no(node)</b>;
-    }
+<pre>
+    <code style="font-size:18; color:brown;"  >
+        static boolean solvable(BinaryTree node) {
+            <b>enter(node);</b>
+            if (node == null) return <b>no(node)</b>;
+            if (node.isGoalNode) return <b>yes(node)</b>;
+            if (solvable(node.leftChild)) return <b>yes(node)</b>;
+            if (solvable(node.rightChild)) return <b>yes(node)</b>;
+            return <b>no(node)</b>;
+        }
+    </code>
 </pre>
 <p>
     And we get these results:
@@ -471,7 +489,8 @@ true
     The simple solution is to make your debugging statements <i>conditional</i>. For example,
 </p>
 
-<pre style="font-size:18; color: brown;">
+<pre>
+    <code style="font-size:18; color: brown;">
         <p><b>static final boolean debugging = false; </b></p>
     static void enter(BinaryTree node) 
         <b>if (debugging) {</b>
@@ -495,6 +514,7 @@ true
         <b>}</b>
         return false;
     }
+    </code>
 </pre>
 <p>
 In industry, actual programs often have multiple flags to control different aspects of debugging. Don't worry too much about making your code larger; modern compilers will notice that since the variable <big style="color:brown;">debugging</big> is <big style="color:brown;">final</big>, it can never be <big style="color:brown;">true</big>, and the controlled code will be discarded.
@@ -502,8 +522,10 @@ In industry, actual programs often have multiple flags to control different aspe
 <p>
     <b>Trick #4: Create an Exception.</b> If an Exception is thrown, you can get information about just where it happened by sending it the message <big style="color:brown;">printStackTrace(PrintStream)</big>. Since an Exception is an object like any other, you can create and <big style="color:brown ;">throw</big> your own Exceptions. However, Java programmers don't always realize that you can create an Exception <i>without</i> throwing it. For example, the following code
 </p>
-<pre style="font-size:18; color: brown; ">
-    new Exception("Checkpoint Charlie").printStackTrace(System.out);
+<pre>
+    <code style="font-size:18; color: brown; ">
+        new Exception("Checkpoint Charlie").printStackTrace(System.out);
+    </code>
 </pre>
 <p>
     will print out a message something like this, and the program will then continue normally. That is, the above code just acts like a print statement.
@@ -511,13 +533,15 @@ In industry, actual programs often have multiple flags to control different aspe
 <p>
     will print out a message something like this, and the program will then continue normally. That is, the above code just acts like a print statement.
 </p>
-<pre style="font-size:18; color: brown;">
-    java.lang.Exception: Checkpoint Charlie
+<pre>
+    <code style="font-size:18; color: brown;">
+        java.lang.Exception: Checkpoint Charlie
         at TreeSearch.solvable(TreeSearch.java:53)
         at TreeSearch.solvable(TreeSearch.java:57)
         at TreeSearch.main(TreeSearch.java:72)
         at __SHELL38.run(__SHELL38.java:16)
         at bluej.runtime.ExecServer.suspendExecution(Unknown Source)
+    </code>
 </pre>
 
 
@@ -525,23 +549,23 @@ In industry, actual programs often have multiple flags to control different aspe
 <p>
     I call the following puzzle "Cindy's puzzle" for historical reasons. You have some number <big style="color:brown ;">n</big> of black marbles and the same number of white marbles, and you have a playing board which consists simply of a line of <big style=color:brown>2n+1</big> spaces to put the marbles in. Start with the black marbles all at one end (say, the left), the white marbles all at the other end, and a free space in between.
 </p>
-<table border="3px" style="width: 30%; margin-left: 40%; border-collapse: collapse; background-color: rgba(128, 128, 128, 0.148);">
-        <tr style="text-align:center ;">
-            <td  width="40"><img src="black-ball.gif"  height="40"></td>
-            <td  width="40"><img src="black-ball.gif"  height="40"></td>
-            <td  width="40">&nbsp;</td>
-            <td  width="40"><img src="white-ball.gif"  height="40"></td>
-            <td  width="40"><img src="white-ball.gif"  height="40"></td>
+<table border="3px" style=margin-left:40%;border-collapse:collapse;background-color:rgba(128,128,128,0.148);">
+        <tr style="text-align:center; width: 60;height: 55;">
+            <td  width="44"><img src="black-ball.gif"  height="44"></td>
+            <td  width="44"><img src="black-ball.gif"  height="44"></td>
+            <td  width="44">&nbsp;</td>
+            <td  width="44"><img src="white-ball.gif"  height="44"></td>
+            <td  width="44"><img src="white-ball.gif"  height="44"></td>
         </tr>
 </table>
 <p>The goal is to reverse the positions of the marbles:</p>
-<table border="3px" style="width: 30%; margin-left: 40%; border-collapse: collapse; background-color: rgba(128, 128, 128, 0.148);">
-    <tr style="text-align:center ;">
-        <td width="40"><img src="white-ball.gif" height="40"></td>
-        <td width="40"><img src="white-ball.gif" height="40"></td>
-        <td width="40">&nbsp;</td>
-        <td width="40"><img src="black-ball.gif" height="40"></td>
-        <td width="40"><img src="black-ball.gif" height="40"></td>
+<table border="3px" style="margin-left: 40%; border-collapse: collapse; background-color: rgba(128, 128, 128, 0.148);">
+    <tr style="text-align:center; width: 60;height: 55;">
+        <td width="44"><img src="white-ball.gif" height="44"></td>
+        <td width="44"><img src="white-ball.gif" height="44"></td>
+        <td width="44">&nbsp;</td>
+        <td width="44"><img src="black-ball.gif" height="44"></td>
+        <td width="44"><img src="black-ball.gif" height="44"></td>
     </tr>
 </table>
 
@@ -553,98 +577,106 @@ In industry, actual programs often have multiple flags to control different aspe
     <li>Jump ahead over exactly one marble of the opposite color, if the space just beyond that marble is clear.</li>
 </ul>
 <p>For example, you could make the following sequence of moves:</p>
-<table>
-    <tr>
-        <th> <b> Starting position: </b></th>
-        <tr>
-            <table border="3px" style="width: 30%; text-align: center; margin-left: 50%; border-collapse: collapse; background-color: rgba(128, 128, 128, 0.148);">
-            <tr>
-            <td width="40"><img src="black-ball.gif" height="40"></td>
-            <td width="40"><img src="black-ball.gif" height="40"></td>
-            <td width="40">&nbsp;</td>
-            <td width="40"><img src="white-ball.gif" height="40"></td>
-            <td width="40"><img src="white-ball.gif" height="40"></td>
-            </tr>
-        </table>   </tr>
-    </tr>
+<table style="margin-left: 20% ;">
 
     <tr>
-        <th> <b>Black moves ahead:</b> 	</th>
+        <td><label><b>Starting position :</b></label></td>
+        
         <td>
-            <table border="3px" style="width: 30%; text-align: center; margin-left: 50%; border-collapse: collapse; background-color: rgba(128, 128, 128, 0.148);">
-                <tr>
-                <td width="40"><img src="black-ball.gif" height="40"></td>
-                <td width="40">&nbsp;</td>
-                <td width="40"><img src="black-ball.gif" height="40"></td>
-                <td width="40"><img src="white-ball.gif" height="40"></td>
-                <td width="40"><img src="white-ball.gif" height="40"></td>
+            <table border="3px" style="border-collapse: collapse; background-color: rgba(128, 128, 128, 0.148);">
+                <tr style="height: 60;width: 55; ">
+                <td width="44"><img src="black-ball.gif" height="44"></td>
+                <td width="44"><img src="black-ball.gif" height="44"></td>
+                <td width="44">&nbsp;</td>
+                <td width="44"><img src="white-ball.gif" height="44"></td>
+                <td width="44"><img src="white-ball.gif" height="44"></td>
                 </tr>
-            </table>
+            </table> 
         </td>
     </tr>
 
     <tr>
-        <th> <b>White jumps:</b></th>
+        <td><label><b>Black moves ahead :</b></label></td>
+        
         <td>
-            <table border="3px" style="width: 30%; text-align: center; margin-left: 50%; border-collapse: collapse; background-color: rgba(128, 128, 128, 0.148);">
-                <tr>
-                <td width="40"><img src="black-ball.gif" height="40"></td>
-                <td width="40"><img src="white-ball.gif" height="40"></td>
-                <td width="40"><img src="black-ball.gif" height="40"></td>
-                <td width="40">&nbsp;</td>
-                <td width="40"><img src="white-ball.gif" height="40"></td>
+            <table border="3px" style="border-collapse: collapse; background-color: rgba(128, 128, 128, 0.148);">
+                <tr style="height: 60;width: 55; ">
+                <td width="44"><img src="black-ball.gif" height="44"></td>
+                <td width="44">&nbsp;</td>
+                <td width="44"><img src="black-ball.gif" height="44"></td>
+                <td width="44"><img src="white-ball.gif" height="44"></td>
+                <td width="44"><img src="white-ball.gif" height="44"></td>
                 </tr>
-            </table>
+            </table> 
         </td>
     </tr>
 
     <tr>
-        <th><b>Black moves ahead:</b></th>
+        <td><label><b>White jumps :</b></label></td>
+        
         <td>
-            <table border="3px" style="width: 30%; text-align: center; margin-left: 50%; border-collapse: collapse; background-color: rgba(128, 128, 128, 0.148);">
-                <tr>
-                <td width="40"><img src="black-ball.gif" height="40"></td>
-                <td width="40"><img src="white-ball.gif" height="40"></td>
-                <td width="40">&nbsp;</td>
-                <td width="40"><img src="black-ball.gif" height="40"></td>
-                <td width="40"><img src="white-ball.gif" height="40"></td>
+            <table border="3px" style="border-collapse: collapse; background-color: rgba(128, 128, 128, 0.148);">
+                <tr style="width: 60; height: 55;">
+                <td width="44"><img src="black-ball.gif" height="44"></td>
+                <td width="44"><img src="white-ball.gif" height="44"></td>
+                <td width="44"><img src="black-ball.gif" height="44"></td>
+                <td width="44">&nbsp;</td>
+                <td width="44"><img src="white-ball.gif" height="44"></td>
                 </tr>
-            </table>
+            </table> 
         </td>
     </tr>
 
     <tr>
-        <th><b>Black jumps:</b></th>
+        <td><label><b>Black moves ahead :</b></label></td>
+        
         <td>
-            <table border="3px" style="width: 30%; text-align: center; margin-left: 50%; border-collapse: collapse; background-color: rgba(128, 128, 128, 0.148);">
-                <tr>
-                <td width="40">&nbsp;</td>
-                <td width="40"><img src="white-ball.gif" height="40"></td>
-                <td width="40"><img src="black-ball.gif" height="40"></td>
-                <td width="40"><img src="black-ball.gif" height="40"></td>
-                <td width="40"><img src="white-ball.gif" height="40"></td>
+            <table border="3px" style="border-collapse: collapse; background-color: rgba(128, 128, 128, 0.148);">
+                <tr style="width: 60;height: 55;">
+                <td width="44"><img src="black-ball.gif" height="44"></td>
+                <td width="44"><img src="white-ball.gif" height="44"></td>
+                <td width="44">&nbsp;</td>
+                <td width="44"><img src="black-ball.gif" height="44"></td>
+                <td width="44"><img src="white-ball.gif" height="44"></td>
                 </tr>
-            </table>
-        </td>
-    </tr>
-<br>
-    <tr>
-        <th><b>White moves ahead:</b></th>
-        <td>
-            <table border="3px" style="width: 30%; text-align: center; margin-left: 50%; border-collapse: collapse; background-color: rgba(128, 128, 128, 0.148);">
-                <tr>
-                <td width="40">&nbsp;</td>
-                <td width="40"><img src="white-ball.gif" height="40"></td>
-                <td width="40"><img src="black-ball.gif" height="40"></td>
-                <td width="40"><img src="black-ball.gif" height="40"></td>
-                <td width="40"><img src="white-ball.gif" height="40"></td>
-                </tr>
-            </table>
+            </table> 
         </td>
     </tr>
 
     <tr>
-        <th><b>Stuck!</b></th>
+        <td><label><b>Black jumps :</b></label></td>
+        
+        <td>
+            <table border="3px" style="border-collapse: collapse; background-color: rgba(128, 128, 128, 0.148);">
+                <tr style="width: 60;height: 55;">
+                <td width="44">&nbsp;</td>
+                <td width="44"><img src="white-ball.gif" height="44"></td>
+                <td width="44"><img src="black-ball.gif" height="44"></td>
+                <td width="44"><img src="black-ball.gif" height="44"></td>
+                <td width="44"><img src="white-ball.gif" height="44"></td>
+                </tr>
+            </table> 
+        </td>
+    </tr>
+
+    <tr>
+        <td><label><b>White moves ahead :</b></label></td>
+        
+        <td>
+            <table border="3px" style="border-collapse: collapse; background-color: rgba(128, 128, 128, 0.148);">
+                <tr style="width: 60;height: 55;">
+                    <td width="44">&nbsp;</td>
+                    <td width="44"><img src="white-ball.gif" height="44"></td>
+                    <td width="44"><img src="black-ball.gif" height="44"></td>
+                    <td width="44"><img src="black-ball.gif" height="44"></td>
+                    <td width="44"><img src="white-ball.gif" height="44"></td>
+                    </tr>
+            </table> 
+        </td>
+    </tr>
+    
+    <tr>
+        <td><label><b>Stuck!</b></label></td>
     </tr>
 </table>
 
@@ -676,22 +708,24 @@ In industry, actual programs often have multiple flags to control different aspe
 <p>
     With these methods, our central backtracking method can be written as follows:
 </p>
-<pre style="font-size:18; color: brown;">
-    boolean solvable(int[] board) {
-        if (puzzleSolved(board)) {
-            return true;
-        }
-        for (int position = 0; position < BOARD_SIZE; position++) {
-            if (canMove(board, position)) {
-                int[] newBoard = makeMove(board, position);
-                if (solvable(newBoard)) {
-                    printBoard(newBoard);
-                    return true;
+<pre>
+    <code style="color: brown; font-size: 18;">
+        boolean solvable(int[] board) {
+            if (puzzleSolved(board)) {
+                return true;
+            }
+            for (int position = 0; position < BOARD_SIZE; position++) {
+                if (canMove(board, position)) {
+                    int[] newBoard = makeMove(board, position);
+                    if (solvable(newBoard)) {
+                        printBoard(newBoard);
+                        return true;
+                    }
                 }
             }
+            return false;
         }
-        return false;
-    }
+    </code>
 </pre>
 <p>
     Along with <big style="font-size:18; color:brown;"></big> canMove </big> and <big style="font-size:18; color:brown;"></big> makeMove </big>, we are using methods <big style="font-size:18; color:brown;">puzzleSolved</big> and <big style="font-size:18; color:brown;">printBoard</big> with meanings that should be obvious.
@@ -707,7 +741,7 @@ In industry, actual programs often have multiple flags to control different aspe
 <font style="color:blue;">13.</font>  WHITE  _____  WHITE  BLACK  WHITE  BLACK  BLACK
 <font style="color:blue;">12.</font>  WHITE  BLACK  WHITE  _____  WHITE  BLACK  BLACK
 <font style="color:blue;">11.</font>  WHITE  BLACK  WHITE  BLACK  WHITE  _____  BLACK
-<font style="color:blue;">10.</font> WHITE  BLACK  WHITE  BLACK  WHITE  BLACK  _____
+<font style="color:blue;">10.</font>  WHITE  BLACK  WHITE  BLACK  WHITE  BLACK  _____
 <font style="color:blue;"> 9.</font>  WHITE  BLACK  WHITE  BLACK  _____  BLACK  WHITE
 <font style="color:blue;"> 8.</font>  WHITE  BLACK  _____  BLACK  WHITE  BLACK  WHITE
 <font style="color:blue;"> 7.</font>  _____  BLACK  WHITE  BLACK  WHITE  BLACK  WHITE
